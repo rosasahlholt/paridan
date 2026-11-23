@@ -1,0 +1,1399 @@
+:root {
+  /* NCS-farver */
+  --paridan-light: #ccdded; /* NCS S 0515-R80B */
+  --paridan-dark: #003272; /* NCS S 4550-R80B */
+
+  --header-bg: var(--paridan-light);
+  --nav-text: var(--paridan-dark);
+  --hero-btn: var(--paridan-dark);
+  --hero-btn-text: #fdfdfd;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes page-exit {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+::view-transition-old(root) {
+  animation: page-exit 180ms ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: page-enter 420ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+@font-face {
+  font-family: "GT America Mono";
+  src: url("./fonts/GT-America-Mono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Master Works";
+  src: url("./fonts/master-works.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "GT America Mono", system-ui, sans-serif;
+
+  background: #f5f5f5;
+  color: #111827;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* HEADER / NAV */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(204, 221, 237, 0.94);
+  border-bottom: 1px solid rgba(0, 50, 114, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 31, 74, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.site-header__inner {
+  width: min(100%, 1440px);
+  margin: 0 auto;
+  padding: 0.7rem clamp(1rem, 4vw, 3rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.9rem;
+  color: var(--paridan-dark);
+  letter-spacing: 0.02em;
+  margin-left: 0;
+}
+
+.logo a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.35rem, 1.2vw, 1.1rem);
+  font-family: "GT America Mono", monospace;
+  font-size: 0.84rem;
+  color: var(--nav-text);
+  font-weight: 400;
+}
+
+.main-nav a {
+  position: relative;
+  padding: 0.55rem 0.7rem;
+  border-radius: 999px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.main-nav a::after {
+  content: none;
+}
+
+.main-nav > a:hover,
+.main-nav > a:focus-visible {
+  background: rgba(255, 255, 255, 0.55);
+  color: #001f4a;
+}
+
+/* Burger-knap (skjult på desktop) */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 50, 114, 0.16);
+  background: rgba(255, 255, 255, 0.62);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 31, 74, 0.12);
+}
+
+.nav-toggle__lines {
+  width: 18px;
+  height: 14px;
+  position: relative;
+}
+
+.nav-toggle__lines span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--paridan-dark);
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease,
+    bottom 0.2s ease;
+}
+
+.nav-toggle__lines span:nth-child(1) {
+  top: 0;
+}
+.nav-toggle__lines span:nth-child(2) {
+  top: 6px;
+}
+.nav-toggle__lines span:nth-child(3) {
+  bottom: 0;
+}
+
+/* Når nav er åben */
+.nav-open .nav-toggle__lines span:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+.nav-open .nav-toggle__lines span:nth-child(2) {
+  opacity: 0;
+}
+.nav-open .nav-toggle__lines span:nth-child(3) {
+  bottom: 6px;
+  transform: rotate(-45deg);
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero__inner {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 4.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr);
+  align-items: center;
+  gap: 2rem;
+  z-index: 1;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/img/billede4.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  animation: heroBackgroundDrift 24s ease-in-out infinite alternate;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.25) 40%,
+    rgba(0, 0, 0, 0.25) 65%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  color: #f9fafb;
+  animation: heroContentEnter 0.8s ease-out both;
+}
+
+@keyframes heroBackgroundDrift {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes heroContentEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero__heading {
+  font-weight: 300;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  max-width: 16ch;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hero__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.7rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
+}
+
+.hero__btn--primary {
+  background: var(--hero-btn);
+  color: var(--hero-btn-text);
+}
+
+.hero__btn--secondary {
+  background: transparent;
+  color: #f9fafb;
+  border: 1px solid rgba(248, 250, 252, 0.85);
+}
+
+.hero__btn:hover,
+.hero__btn:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 24px rgba(0, 31, 74, 0.28);
+}
+
+.hero__btn--primary:hover,
+.hero__btn--primary:focus-visible {
+  background: #0b4a9a;
+}
+
+.hero__btn--secondary:hover,
+.hero__btn--secondary:focus-visible {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.hero__btn:active,
+.paridan-story__btn:active,
+.contact-video-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.hero__visual {
+  position: relative;
+  height: 100%;
+}
+
+/* RESPONSIVE NAV / HERO */
+@media (max-width: 900px) {
+  .site-header__inner {
+    padding: 0.55rem 1rem;
+    gap: 1rem;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .main-nav {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    padding: 0.75rem 1rem 1.25rem;
+    background: rgba(204, 221, 237, 0.98);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(0, 50, 114, 0.12);
+    box-shadow: 0 12px 20px rgba(0, 31, 74, 0.12);
+    transform-origin: top;
+    transform: scaleY(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.18s ease-out, opacity 0.18s ease-out;
+  }
+
+  .nav-open .main-nav {
+    transform: scaleY(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-nav > a {
+    padding: 0.8rem 1rem;
+    text-align: center;
+  }
+
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 3.25rem;
+  }
+
+  .hero__content {
+    text-align: center;
+  }
+
+  .hero__heading {
+    margin-inline: auto;
+  }
+
+  .hero__buttons {
+    justify-content: center;
+  }
+}
+.paridan-story {
+  background: #dde7f4; /* lys blå, tæt på NCS S 0515-R80B */
+  padding: 4rem 1.5rem 4.5rem;
+}
+
+.paridan-story__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 3rem;
+}
+
+.paridan-story__content {
+  text-align: center;
+  color: #003272; /* NCS S 4550-R80B – den mørke blå */
+}
+
+.paridan-story__heading {
+  font-family: "Master Works", system-ui, serif;
+  font-size: clamp(2.4rem, 3.4vw, 3rem);
+  font-weight: 500;
+  margin-bottom: 1.8rem;
+}
+
+.paridan-story__text {
+  max-width: 36rem;
+  margin: 0 auto 1.1rem;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+.paridan-story__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.8rem;
+  padding: 0.7rem 1.8rem;
+  border-radius: 999px;
+  background: var(--paridan-dark);
+  color: #f5f7fb;
+  font-size: 0.9rem;
+  border: none;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.paridan-story__btn:hover,
+.paridan-story__btn:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 14px 28px rgba(0, 31, 74, 0.3);
+  background: #0b4a9a;
+}
+
+.paridan-story__visual {
+  display: flex;
+  justify-content: center;
+}
+
+.paridan-story__visual img {
+  max-width: 260px;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ====== Responsiv ====== */
+@media (max-width: 900px) {
+  .paridan-story__inner {
+    grid-template-columns: minmax(0, 1fr);
+    text-align: center;
+  }
+
+  .paridan-story__visual {
+    order: -1; /* GIF øverst på mobil – slet denne linje hvis tekst skal stå først */
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .paridan-story {
+    padding: 3rem 1.25rem 3.5rem;
+  }
+
+  .paridan-story__heading {
+    font-size: 2.1rem;
+  }
+}
+.driver-wrap {
+  width: 280px;
+  margin: auto;
+  position: relative;
+  overflow: visible;
+}
+
+.driver-img {
+  width: 100%;
+  display: block;
+  animation: driveFloat 3s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes driveFloat {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-3px) rotate(0.35deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+/* Sprog-switch i navigationen */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(0, 50, 114, 0.15); /* din mørkeblå */
+  margin-left: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.lang-switch a {
+  padding: 0.25rem 0.35rem;
+}
+
+.lang-switch a::after {
+  content: none;
+}
+
+.lang-switch__divider {
+  opacity: 0.5;
+}
+
+.lang-switch__link {
+  text-decoration: none;
+  font-weight: 500;
+  color: #003272; /* mørk blå */
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+
+.lang-switch__link:hover {
+  opacity: 1;
+}
+
+.lang-switch__link--active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+/* På mobil – læg den under links */
+@media (max-width: 900px) {
+  .lang-switch {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    align-self: center;
+  }
+}
+
+/* ===========================
+   FOOTER – PARIDAN
+=========================== */
+
+.site-footer {
+  background: #0d2f6c;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2.5rem) 1.5rem;
+  color: #cfe1f8;
+  font-family: "GT America Mono", system-ui, sans-serif;
+}
+
+.site-footer a {
+  color: #cfe1f8;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+}
+
+.site-footer__inner {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.footer-col {
+  min-width: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.footer-center {
+  text-align: center;
+}
+
+.footer-logo-img {
+  width: clamp(100px, 10vw, 140px);
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 0.4rem;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.site-footer__credit {
+  width: min(100%, 1100px);
+  margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(207, 225, 248, 0.22);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  opacity: 0.72;
+  text-align: center;
+}
+
+.site-footer__credit a {
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 700px) {
+  .site-footer__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .footer-center {
+    order: -1;
+  }
+
+  .footer-left,
+  .footer-right {
+    text-align: center;
+  }
+}
+
+.logo-img {
+  width: 100px; /* justér efter smag */
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .logo-img {
+    width: 90px;
+  }
+}
+
+/* ===========================
+   KATALOG-SEKTION – PARIDAN
+=========================== */
+
+.catalog-section {
+  position: relative;
+  padding: 5rem 1.5rem;
+  overflow: hidden;
+  background: #003272; /* fallback hvis billede ikke loader */
+}
+
+/* Baggrundsbillede */
+.catalog-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("/img/paridan_udvalg.png"); /* ← udskift med dit billednavn */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.75; /* gør den “levende” men ikke for kraftig */
+  animation: bgFloat 12s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+/* Let “float” animation */
+@keyframes bgFloat {
+  0% {
+    transform: scale(1);
+    filter: brightness(0.95);
+  }
+  100% {
+    transform: scale(1.07);
+    filter: brightness(1.05);
+  }
+}
+
+.catalog-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1150px;
+  margin: auto;
+  text-align: center;
+  color: #ffffff;
+}
+
+.catalog-heading {
+  font-family: "Master Works", serif;
+  font-size: clamp(2.4rem, 4vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.catalog-subtitle {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-bottom: 3rem;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.catalog-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.catalog-item img {
+  width: 100%;
+  max-width: 360px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.catalog-item:hover img {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.5);
+}
+
+.catalog-title {
+  font-family: "GT America Mono", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  opacity: 0.9;
+}
+
+/* RESPONSIV */
+@media (max-width: 800px) {
+  .catalog-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .catalog-item img {
+    max-width: 300px;
+  }
+}
+
+/* ===========================
+   VIDEO KONTAKTSEKTION
+=========================== */
+
+.contact-video-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 1.5rem;
+
+  display: flex;
+  align-items: center; /* Centrér lodret */
+  justify-content: center; /* Centrér vandret */
+
+  color: #f5f7fb;
+  overflow: hidden;
+  text-align: center; /* Sikrer centreret tekst */
+}
+
+/* VIDEO som baggrund */
+.contact-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.7);
+}
+
+.contact-video-inner {
+  position: relative;
+  z-index: 3;
+  max-width: 1150px;
+  margin: auto;
+  text-align: center;
+}
+
+/* TYPOGRAFI */
+.contact-video-heading {
+  font-family: "Master Works", serif;
+  font-size: clamp(2.5rem, 4vw, 3.2rem);
+  margin-bottom: 0.75rem;
+}
+
+.contact-video-subtitle {
+  font-size: 1.15rem;
+  max-width: 42rem;
+  margin: 0 auto 3.5rem;
+  opacity: 0.92;
+}
+
+.contact-video-grid {
+  display: block; /* Kun én kolonne – så bliver alt samlet i midten */
+  margin-top: 2rem;
+}
+
+/* Kontakt info */
+.contact-video-info {
+  text-align: center;
+}
+
+.contact-video-title {
+  font-family: "Master Works", serif;
+  font-size: 2rem;
+  margin-bottom: 1.4rem;
+}
+
+.contact-video-item {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.4rem;
+  font-size: 1.05rem;
+  justify-content: center;
+}
+
+.contact-video-icon {
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+.contact-video-item a:hover {
+  border-color: #fff;
+}
+
+/* CTA */
+.contact-video-btn {
+  display: inline-flex;
+  margin-top: 1.8rem;
+  padding: 0.85rem 1.9rem;
+  background: #003272;
+  color: #f5f7fb;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.contact-video-btn:hover,
+.contact-video-btn:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.32);
+  background: #0b4a9a;
+}
+
+/* Grafisk blok højre side */
+.contact-video-art {
+  position: relative;
+  height: 340px;
+}
+
+.contact-video-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 260px;
+  height: 260px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  backdrop-filter: blur(4px);
+}
+
+.contact-video-line {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  height: 4px;
+  width: 180px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+}
+
+/* MOBILE */
+@media (max-width: 850px) {
+  .contact-video-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .contact-video-info {
+    text-align: center;
+  }
+
+  .contact-video-item {
+    justify-content: center;
+  }
+
+  .contact-video-art {
+    margin-top: 2rem;
+  }
+}
+
+/* ===========================
+   ABOUT HERO – VIDEO
+=========================== */
+
+.about-hero-video {
+  position: relative;
+  min-height: 60vh;
+  padding: 6rem 1.5rem 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #003272;
+  text-align: center;
+}
+
+/* Video baggrund */
+.about-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Overlay for bedre læsbarhed */
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.332); /* Mørk blå med transparens */
+}
+
+.about-hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 850px;
+}
+
+/* Typografi */
+.about-hero-heading {
+  font-family: "Master Works", serif;
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.about-hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 40rem;
+  margin: 0 auto;
+  color: white;
+}
+
+/* ------------------------------
+   FOUNDER SECTION
+------------------------------ */
+.founder-section {
+  padding: 5rem 1.5rem;
+  background: #dde7f4;
+}
+
+.founder-inner {
+  max-width: 1180px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.founder-heading {
+  font-family: "Master Works", serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #003272;
+  text-align: center;
+}
+
+.founder-text p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  color: #003272;
+  text-align: center;
+}
+
+.founder-image {
+  position: relative;
+}
+
+.founder-image img {
+  width: 100%; /* Gør billedet responsivt */
+  max-width: 600px; /* Bevar maksimal bredde */
+  border-radius: 12px;
+}
+
+.founder-shape {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 160px;
+  height: 160px;
+  background: rgba(0, 50, 114, 0.2);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
+@media (max-width: 900px) {
+  .founder-inner {
+    grid-template-columns: 1fr; /* Stack i stedet for side-by-side */
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .founder-image {
+    margin: 0 auto;
+  }
+
+  .founder-shape {
+    bottom: -10px;
+    right: calc(50% - 80px); /* Centrer shape under billedet */
+  }
+}
+/* =============================
+   MODERN GLASS TIMELINE
+============================= */
+.timeline-section {
+  position: relative;
+  padding: 6rem 1.5rem;
+
+  background-image: url("/img/effectphoto - Paridan fotos af produkter havn -06520.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  text-align: center;
+  overflow: hidden;
+}
+
+/* DARK OVERLAY */
+.timeline-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55));
+
+  z-index: 0;
+}
+
+/* Sørg for at indholdet kommer OVER overlay */
+.timeline-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-heading {
+  font-family: "Master Works", serif;
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  color: #ffffff;
+}
+
+/* CONTAINER */
+.timeline {
+  position: relative;
+  margin: auto;
+  max-width: 780px;
+  padding-inline: 1rem;
+}
+
+/* MID LINE */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #ffffff, transparent);
+  transform: translateX(-50%);
+}
+
+/* ITEMS */
+.timeline-item {
+  position: relative;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+
+  /* animation setup */
+  opacity: 0;
+  transform: translateY(40px);
+  animation: timelineFadeUp 0.7s ease forwards;
+}
+
+.timeline-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.timeline-item:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.timeline-item:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.timeline-item:nth-child(4) {
+  animation-delay: 0.55s;
+}
+.timeline-item:nth-child(5) {
+  animation-delay: 0.7s;
+}
+
+/* CARD */
+.timeline-content {
+  margin-top: 2rem;
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.8rem 1.9rem;
+  border-radius: 18px;
+  max-width: 470px;
+  width: 100%;
+  position: relative;
+
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.timeline-content h3 {
+  font-family: "Master Works", serif;
+  font-size: 1.45rem;
+  margin-bottom: 0.4rem;
+  color: var(--paridan-dark);
+}
+
+.timeline-content p {
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--paridan-dark);
+}
+
+/* HOVER LIFT EFFECT */
+.timeline-content:hover {
+  transform: translateY(-5px) scale(1.02);
+  background: rgba(255, 255, 255, 0.45);
+
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.25),
+    0 0 22px rgba(0, 50, 114, 0.18);
+}
+
+/* ==========================
+   ANIMATIONS
+========================== */
+
+@keyframes timelineFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(45px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* DOT PULSE */
+@keyframes dotPulse {
+  0% {
+    box-shadow: 0 0 0 6px rgba(0, 50, 114, 0.15), 0 0 18px rgba(0, 50, 114, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(0, 50, 114, 0.12),
+      0 0 28px rgba(0, 50, 114, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 6px rgba(0, 50, 114, 0.15), 0 0 18px rgba(0, 50, 114, 0.5);
+  }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width: 700px) {
+  .timeline::before {
+    left: 12px;
+    transform: none;
+  }
+
+  .timeline-item {
+    justify-content: flex-start;
+  }
+
+  .timeline-dot {
+    left: 12px;
+    transform: none;
+  }
+
+  .timeline-content {
+    margin-left: 2.5rem;
+    max-width: calc(100% - 2.5rem);
+  }
+}
+
+/* ------------------------------
+   DNA / VALUES
+------------------------------ */
+.dna-section {
+  background: var(--header-bg);
+  padding: 5rem 1.5rem;
+  color: var(--paridan-dark);
+}
+
+.dna-inner {
+  max-width: 1180px;
+  margin: auto;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dna-card {
+  background: var(--header-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  width: 280px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.dna-card h3 {
+  font-family: "Master Works", serif;
+  font-size: 2.3rem;
+  margin-bottom: 0.8rem;
+}
+/* ===========================
+   HERO FIX – BRED TEXT + KAPPER UNDER
+=========================== */
+
+.hero__content {
+  margin-inline: auto; /* Centrer containeren */
+  text-align: center;
+}
+
+.hero__heading {
+  max-width: none; /* Fjerner 16ch-begrænsningen */
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  font-family: "Master Works", serif;
+  font-size: 3.8rem;
+}
+
+
+/* Sørg for at knapperne står midt og lige under teksten */
+.hero__buttons {
+  justify-content: center;
+  margin-top: 0;
+}
+/* ===========================
+   BRANDS – HERO
+=========================== */
+
+.brands-hero {
+  background: var(--paridan-light);
+  padding: 5rem 1.5rem 4.5rem;
+  text-align: center;
+}
+
+.brands-hero__inner {
+  max-width: 820px;
+  margin: auto;
+}
+
+.brands-hero h1 {
+  font-family: "Master Works", serif;
+  font-size: clamp(2.3rem, 4vw, 3rem);
+  color: #003272;
+  margin-bottom: 1rem;
+}
+
+.brands-hero p {
+  font-size: 1.05rem;
+  color: rgba(0, 50, 114, 0.75);
+}
+
+/* ===========================
+   BRAND GRID
+=========================== */
+
+.brands-grid-section {
+  background: var(--paridan-light);
+  padding: 2rem 1.5rem 5rem;
+}
+
+.brands-grid {
+  max-width: 760px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 4rem;
+  align-items: center;
+}
+
+.brand-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  padding: 1rem;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.brand-card img {
+  width: 100%;
+  max-width: 180px;
+  height: 100px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.brand-card:hover,
+.brand-card:focus-visible {
+  transform: translateY(-3px);
+}
+
+.brand-card:hover img {
+  transform: scale(1.04);
+}
+
+/* ===========================
+   MOBILE OPTIMIZATION
+=========================== */
+
+@media (max-width: 600px) {
+  .brands-hero {
+    padding: 4rem 1.2rem 3.5rem;
+  }
+
+  .brands-grid {
+    gap: 1.6rem;
+  }
+
+  .brand-card img {
+    max-width: 160px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  .hero::before,
+  .hero__content,
+  .driver-img,
+  .catalog-bg {
+    animation: none;
+  }
+
+  .hero__btn,
+  .paridan-story__btn,
+  .contact-video-btn,
+  .catalog-item,
+  .catalog-item img,
+  .brand-card,
+  .brand-card img {
+    transition: none;
+  }
+}
